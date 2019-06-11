@@ -195,3 +195,29 @@ button:focus {
     padding: 5px;
   }
 }
+
+@media only screen and (max-height: 700px) {
+  #paper-out {
+    width: 422px;
+    height: 500px;
+  }
+  .image {
+    width: 100px;
+    height: 100px;
+  }
+  #number {
+    font-size: 1.25rem;
+  }
+  #question {
+    font-size: 1.25rem;
+  }
+  #button {
+    font-size: 1.5rem;
+  }
+  .text {
+    font-size: 1.25rem;
+    width: 100px;
+    height: auto;
+    padding: 5px;
+  }
+}

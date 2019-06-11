@@ -18,7 +18,6 @@ var questionIndex = 0;
 var timerInterval;
 var isRunning = false;
 function startTimer() {
-  console.log("timer called, isRunning =" + isRunning);
   if (isRunning) return;
   timer.css("width", "100%");
   var percent = 100;
@@ -29,14 +28,12 @@ function startTimer() {
       stopTimer();
       return;
     }
-    console.log("interval set");
   }, 15);
   isRunning = true;
 }
 function stopTimer() {
   if (!isRunning) return;
   clearInterval(timerInterval);
-  console.log("interval cleared");
   isRunning = false;
 }
 //question array
@@ -75,7 +72,7 @@ var questions = [
     }
   },
   {
-    q: "which of the following charachters appeard in the original 1978 Battlestar Galactica?",
+    q: "which of the following characters appeard in the original 1978 Battlestar Galactica?",
     a: [
       "assets/images/cylons/saul.jpg",
       "assets/images/cylons/ellen.jpg",
@@ -90,7 +87,7 @@ var questions = [
     }
   },
   {
-    q: "Who is shown in the picture to the left?",
+    q: "Who is shown in the picture above?",
     qImg: "assets/images/people/hot-dog.jpg",
     a: ["Hot Dog", "Apollo", "Boomer", "Crashdown", "Helo", "Tyrol"],
     key: "Hot Dog",
@@ -242,6 +239,9 @@ function startGame() {
 }
 
 $(document).ready(function() {
+  var x = $(window).width();
+  var y = $(window).height();
+  console.log(x + ", " + y + ", " + x / y);
   intro();
 });
 
