@@ -118,12 +118,20 @@ function markAnswer() {
       var finalScore = (score / questions.length) * 100;
       question.empty();
       answer.empty();
+      number.empty();
       pulseIn();
       setTimeout(function() {
         pulseOut();
       }, 500);
       setTimeout(function() {
-        question.text("You got " + score + " answers correct for a score of " + finalScore + "%");
+        var endMessage;
+        if (score === 1) {
+          endMessage = "You got " + score + " answer correct for a score of " + finalScore + "%";
+        } else {
+          endMessage = "You got " + score + " answers correct for a score of " + finalScore + "%";
+        }
+
+        question.text(endMessage);
         var button = $("<button>");
         button.text("play again");
         button.on("click", function() {
@@ -135,11 +143,9 @@ function markAnswer() {
           questions[questionIndex].load();
         });
         answer.append(button);
-        
       }, 1000);
       return;
     }
-
     questions[questionIndex].load();
   }, 1000);
 }
@@ -147,11 +153,13 @@ function markAnswer() {
 function loadText(obj) {
   question.empty();
   answer.empty();
+  number.empty();
   pulseIn();
   setTimeout(function() {
     pulseOut();
   }, 500);
   setTimeout(function() {
+    number.text("Question " + (questionIndex + 1));
     var img = $("<img>");
     img.attr("src", obj.qImg);
     img.addClass("image");
@@ -177,11 +185,13 @@ function loadText(obj) {
 function loadImg(obj) {
   question.empty();
   answer.empty();
+  number.empty();
   pulseIn();
   setTimeout(function() {
     pulseOut();
   }, 500);
   setTimeout(function() {
+    number.text("Question " + (questionIndex + 1));
     question.text(obj.q);
     var answers = obj.a.sort(function(a, b) {
       return 0.5 - Math.random();
@@ -211,6 +221,7 @@ function startGame() {
     var button = $("<button>");
     button.text("play");
     timerBar.append(timer);
+
     paperIn
       .append(number)
       .append(question)
@@ -237,6 +248,12 @@ $(document).ready(function() {
 //variables for the intro
 
 function intro() {
+  var width;
+  if ($(window).width() <= 690) {
+    width = "72vw";
+  } else {
+    width = "440px";
+  }
   //shrink the logo
   logo.animate({ width: "108.75px", height: "108.75px" }, 3000, function() {
     //then fade the logo out
@@ -244,7 +261,7 @@ function intro() {
     //and fade in the header
     header.animate({ opacity: 0.8 }, 1000, function() {
       //then widen the header to show both right and left logos
-      header.animate({ width: "440px", top: "10px" }, 2000);
+      header.animate({ width: width, top: "10px" }, 2000);
       titleDiv.animate({ opacity: "1" }, 2000);
     });
   });
