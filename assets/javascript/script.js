@@ -23,8 +23,10 @@ function startTimer() {
   var percent = 100;
   timerInterval = setInterval(function() {
     percent -= 0.1;
+    console.log(percent);
     timer.css("width", percent + "%");
-    if (percent === 0) {
+    if (percent < 0) {
+      markAnswer(0);
       stopTimer();
       return;
     }
@@ -94,12 +96,63 @@ var questions = [
     load: function() {
       loadText(this);
     }
+  },
+  {
+    q: "Who is shown in the image above?",
+    qImg: "assets/images/people/cottle.jpg",
+    a: ["Cavil", "Ernesto", "Cottle", "Adama", "Daniel", "The first cylon"],
+    key: "Cottle",
+    load: function() {
+      loadText(this);
+    }
+  },
+  {
+    q: "Which of the following is a cylon?",
+    a: [
+      "assets/images/people/laura-roslin.jpg",
+      "assets/images/cylons/ellen.jpg",
+      "assets/images/people/starbuck.jpg",
+      "assets/images/people/dualla.jpg",
+      "assets/images/people/cally.jpg",
+      "assets/images/people/bachmann.jpg"
+    ],
+    key: "ellen",
+    load: function() {
+      loadImg(this);
+    }
+  },
+  {
+    q: "Which of the following is a pejorative term for a cylon that mimics human characteristics?",
+    qImg: "assets/images/cylons/six.jpg",
+    a: ["skin-sack", "grease-bag", "skin-job", "flesh-frame", "cell-y-lon", "toaster"],
+    key: "job",
+    load: function() {
+      loadText(this);
+    }
+  },
+  {
+    q: "Commander Adama was a fighter pilot in the first Cylon War. What was his call sign?",
+    qImg: "assets/images/people/william-adama.jpg",
+    a: ["Husker", "Leo", "Guts", "Apollo", "Gemeni", "Crashdown"],
+    key: "Husker",
+    load: function() {
+      loadText(this);
+    }
+  },
+  {
+    q: "Finish this sentence: This homework assignment is supposed to demonstrate my ability to use",
+    qImg: "assets/images/logo/timer-back.png",
+    a: ["timing functions", "animations", "jQuery", "JSON Objects", "HTML and CSS", "Everything I have learned so far"],
+    key: "Every",
+    load: function() {
+      loadText(this);
+    }
   }
 ];
 //TODO add transitions between questions and show correct answer
-function markAnswer() {
+function markAnswer(mark) {
   stopTimer();
-  var mark = parseInt($(this).attr("value"));
+
   if (mark === 1) {
     $(this).css("background-color", "#f5f5f5");
     paperIn.css("background-color", "lightgreen");
@@ -172,7 +225,9 @@ function loadText(obj) {
         .addClass("text answer")
         .attr("value", val.toString())
         .text(value)
-        .on("click", markAnswer);
+        .on("click", function() {
+          markAnswer(parseInt($(this).attr("value")));
+        });
       answer.append(ans);
     });
     startTimer();
@@ -201,7 +256,9 @@ function loadImg(obj) {
         .attr("src", value)
         .attr("value", val.toString())
         .addClass("image answer")
-        .on("click", markAnswer);
+        .on("click", function() {
+          markAnswer(parseInt($(this).attr("value")));
+        });
       answer.append(img);
     });
     startTimer();
@@ -239,9 +296,6 @@ function startGame() {
 }
 
 $(document).ready(function() {
-  var x = $(window).width();
-  var y = $(window).height();
-  console.log(x + ", " + y + ", " + x / y);
   intro();
 });
 
